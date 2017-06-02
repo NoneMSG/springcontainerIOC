@@ -12,8 +12,61 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<context:annotation-config />
+
+	<bean id="myuser1" name="user1" class="com.jx372.springcontainer.User1" />
+	<bean id="myuser1-2" class="com.jx372.springcontainer.User1" />
+
+	<!-- 기본 생성자로 빈 생성이 되기 때문에 기본 생성자가 없는 경우 에러 -->
+	<bean id="user2" class="com.jx372.springcontainer.User2">
+		<constructor-arg value="popopo" />
+	</bean>
+	<!-- 생성자 인자값 2개일때 생성자 파라미터의 순서 지정이 없으면 설정 순서에 따라 자동으로 파라미터 순서가 결정됨 -->
+	<bean id="user3-1" class="com.jx372.springcontainer.User3">
+		<constructor-arg index="1" value="popopop" />
+		<constructor-arg index="0" value="10" />
+	</bean>
+	<bean id="user3-2" class="com.jx372.springcontainer.User3">
+		<constructor-arg value="10" />
+		<constructor-arg value="dodo" />
+	</bean>
+
+	<!-- setter사용 -->
+	<bean id="user4" class="com.jx372.springcontainer.User4">
+		<property name="no" value="40" />
+		<property name="name" value="pupupu" />
+		<!-- setter가 없으면 error -->
+		<!-- <property name="email" value="pupupu@gmail.com"/> -->
+	</bean>
+
+	<bean id="friend" class="com.jx372.springcontainer.Friend">
+		<constructor-arg value="mice마이크" />
+	</bean>
+	<!-- DI bean의 id값으로 ref속성을 설정하여 값을 주입 (setter가 필요) -->
+	<bean id="user" class="com.jx372.springcontainer.User">
+		<constructor-arg value="Dounut도너츠" />
+		<property name="friend" ref="friend" />
+	</bean>
+	<!-- DI주입 bean을 만들면서 주입 -->
+	<bean id="usr" class="com.jx372.springcontainer.User">
+		<constructor-arg value="네오" />
+		<property name="friend">
+			<bean class="com.jx372.springcontainer.Friend">
+				<constructor-arg value="길동" />
+			</bean>
+		</property>
+	</bean>
 	
-		<bean id="myuser1" class="com.jx372.springcontainer.User1"/>
-	
+	<!-- ref로는 list에 넣을 수 없지만 bean을 property안에 넣으면 list에도 넣을 수 있다. -->
+	<bean id="usr2" class="com.jx372.springcontainer.User">
+		<constructor-arg value="둘리" />
+		<property name="friends">
+			<list>
+				<value>마카롱</value>
+				<value>초코</value>
+				<value>딸기</value>
+			</list>
+		</property>
+	</bean>
+
 
 </beans>
